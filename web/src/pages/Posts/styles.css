@@ -3,3 +3,76 @@
   height: 100vh;
 }
 
+#search-posts{
+  margin-top:3.2rem;
+}
+
+#search-posts label{
+  color:var(--color-base);
+}
+#search-posts .input-block{
+  position: relative;
+}
+
+#search-posts .input-block label{
+  font-size: 2rem;
+
+}
+
+#search-posts .input-block input{
+  width: 100%;
+  height: 5.6rem;
+  margin-top: 0.8rem;
+  border-radius: 0.8rem;
+  background: var(--color-base);
+  border:1px solid gray;
+  outline: 0;
+  padding: 0 1.6rem;
+  font:1.6rem Archivo;
+}
+
+#page-post-list main{
+  margin: 3.2rem auto;
+  width: 90%;
+}
+
+.new-post button{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 0 2.5rem 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.new-post button:hover {
+  zoom: 1;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+}
+
+.new-post label{
+  font-size: 1.9rem;
+  margin-left: 1rem;
+}
+.new-post button{
+  background: var(--color-primary);
+  outline: none;
+  border: 0;
+  cursor: pointer;
+}
+
+@media(min-width:700px){
+  #page-post-list{
+    max-width: 100vw;
+  }
+
+  #page-post-list main{
+      padding: 3.2rem 0;
+      max-width: 740px;
+      margin: 0 auto;
+  }
+
+ 
+}
+

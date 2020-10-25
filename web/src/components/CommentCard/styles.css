@@ -1,0 +1,11 @@
+.comentario{
+  background: #e7e7e7;
+  width: 90%;
+  padding: 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.comentario strong{
+  padding-bottom: 2rem;
+}
