@@ -1,53 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import url from "url";
 import { FaLevelDownAlt } from "react-icons/fa";
-import CommentCard from "../../components/CommentCard";
+import api from "../../services/api";
+import CommentCard, { commentCardProps } from "../../components/CommentCard";
 import Header from "../../components/Header";
 
 import "./styles.css";
+import Axios from "axios";
 
 const PostInfo: React.FC = () => {
+  const [post, setPost] = useState<any>([]);
+  const [comment, setComment] = useState<any>([]);
+
+  useEffect(() => {
+    const uurl = document.location.href;
+
+    const sliceUrl = url.parse(uurl, true);
+
+    const id = sliceUrl.pathname?.split("/")[2];
+
+    const request = api.get(`/posts/${id}/comments`);
+    const request2 = api.get(`/posts/${id}`);
+
+    Axios.all([request, request2]).then(
+      Axios.spread((...response) => {
+        setPost(response[1].data);
+        setComment(response[0].data);
+      })
+    );
+  }, []);
   return (
-    <div id="page-post-form" className="container">
+    <form id="page-post-form" className="container">
       <Header icon="FaAccusoft" title="Interaja com essa publicação!" />
 
       <main>
         <header>
           <div>
-            <strong className="post_id">id: 3</strong>
+            <strong className="post_id">id: {post.id}</strong>
           </div>
         </header>
-        <p>Estou procurando programadores que gostam de programar</p>
+        <p className="content_post">{post.message}</p>
 
         <footer>
-          <input type="text" placeholder="Comente essa publicação"/>
-          <button type="button">
+          <input type="text" placeholder="Comente essa publicação" />
+          <button type="submit">
             <FaLevelDownAlt />
             Comentar
           </button>
         </footer>
-     
 
         <div className="comentarios">
-            <h3>Comentários</h3>
+          <h3>Comentários</h3>
 
-
-              <div className="comentario">
-                <strong className="post_id">id: 1</strong>
-                <p>Qual tipo voce quer? Junior,Senior ou nenhum?</p>  
-              </div>     
-
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-              <CommentCard id={1} content="Qual tipo voce quer? Junior,Senior ou nenhum?"/>
-
+          {comment.map((posts: commentCardProps) => {
+            return (
+              <CommentCard
+                key={posts.id}
+                id={posts.id}
+                comment={posts.comment}
+              />
+            );
+          })}
         </div>
-        </main>
-    </div>
+      </main>
+    </form>
   );
 };
 

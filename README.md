@@ -1,11 +1,25 @@
-## Instalação via Docker
+# Instalação via Docker
 
 * Executando o banco de dados, api e web sem dedicar o terminal para o docker:
 	```
 	$ docker-compose up -d
 	```
 
-* **Nota:** Remova o -d para continuar no terminal do docker. Caso ocorra algum problema em relação à conexão TCP/IP na porta 5432, reinicie o container sem deletá-lo.
+* **Nota:** Remova o -d para continuar no terminal do docker. **Caso ocorra algum problema em relação à conexão TCP/IP na porta 5432**, reinicie o container sem deletá-lo.
+
+  * 1 - Encerrar todos os containers
+ 
+    ```
+    $ docker-compose down
+    ```
+  * 2 - Iniciar todos containers
+    ```
+    $ docker-compose start
+    ```
+  * 3 - Executar banco de dados, server e web novamente
+    ```
+    $ docker-compose up
+    ```
 
 * Encerrando o container sem estar no terminal do docker:
 	```
@@ -17,7 +31,7 @@
   ```
   $ docker exec -it <id do container> sh
   ```
-#### Endpoints
+# Endpoints
 * Base endpoint:
       ```
         http://localhost:3333
@@ -90,14 +104,13 @@ Code 200 response syntax:
 ```
 
 ### Inserir um novo comentário em um determinado post
-Endpoint: /posts/comments
+Endpoint: /posts/:id/comments
 Method: POST
 
 Request syntax:
 ```
     {
         "comment": string,
-        "post_id": int
     }
 
 ```

@@ -10,7 +10,7 @@ class Comment {
   comment: string;
 
   @Column()
-  post_id:string;
+  post_id:number;
 
   @ManyToOne(()=> Post,post => post.comment)
   @JoinColumn({name:'post_id'})

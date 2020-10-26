@@ -7,7 +7,7 @@ function Routes(){
   return(
     <BrowserRouter>
        <Route path='/' exact component={Posts}/>
-       <Route path='/post' component={PostInfo}/> 
+       <Route path='/post/:id' component={PostInfo}/> 
         
     </BrowserRouter>
   );

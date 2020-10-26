@@ -3,22 +3,30 @@ import { FaLevelUpAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./styles.css";
 
-const PostCard: React.FC = () => {
+export interface Card {
+    id: number;
+    message: string;
+}
+
+const PostCard: React.FC<Card> = (props) => {
   return (
     <article className="post-item">
       <header>
         <div>
-          <strong className="post-id">id: 3</strong>
+          <strong className="post-id">id: {props.id}</strong>
         </div>
       </header>
-      <p>Estou procurando programadores que gostam de programar</p>
+      <p>{props.message}</p>
 
       <footer>
         <p>
-          Comentários:
-          <strong> 200</strong>
+          <strong>Ver comentários</strong>
         </p>
-        <Link to="/post">
+        <Link
+          to={{
+            pathname: `/post/${props.id}`,
+          }}
+        >
           <FaLevelUpAlt />
           Abrir post
         </Link>

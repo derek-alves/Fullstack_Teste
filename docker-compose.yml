@@ -17,12 +17,12 @@ services:
       - "3333:3333"
     depends_on:
       - db
-  web:
-    build: 
-      context: web
-    volumes: 
-      - ./web/:/usr/src/web
-    ports: 
-      - "80:80"
-    depends_on: 
-      - api
+  # web:
+  #   build: 
+  #     context: web
+  #   volumes: 
+  #     - ./web/:/usr/src/web
+  #   ports: 
+  #     - "80:80"
+  #   depends_on: 
+  #     - api

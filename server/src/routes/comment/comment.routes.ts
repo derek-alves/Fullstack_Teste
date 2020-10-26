@@ -1,21 +1,24 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, query } from "express";
 import { getRepository } from "typeorm";
 
-import Comment from "../../models/Comment";
+import Post from "../../models/Post";
 
 import CreateCommentService from "../../services/comment/CreateCommentService";
 
 const commentRouter = Router();
 
 commentRouter.post(
-  "/comments",
+  "/:id/comments",
   async (request: Request, response: Response) => {
     try {
-      const data = request.body;
+      const { id } = request.params;
+      const { comment } = request.body;
 
-      const createPost = new CreateCommentService();
+      const post_id = Number(id);
 
-      const post = await createPost.execute(data);
+      const createComment = new CreateCommentService();
+
+      const post = await createComment.execute({ post_id, comment });
       return response.json(post);
     } catch (err) {
       return response.status(400).json({ error: err.message });
@@ -23,28 +26,23 @@ commentRouter.post(
   }
 );
 
-commentRouter.get("/:id/comments", async (request: Request, response: Response) => {
-  const commentRepository = getRepository(Comment);
-
-  const id = request.params;
-  
-  const comments = await commentRepository.find(id);
-
-  return response.json(comments);
-});
-
-commentRouter.get("/:id", async (request: Request, response: Response) => {
-  try {
+commentRouter.get(
+  "/:id/comments",
+  async (request: Request, response: Response) => {
+    const postRepository = getRepository(Post);
     const { id } = request.params;
+    const post = await postRepository
+      .createQueryBuilder("posts")
+      .leftJoinAndSelect("posts.comment", "comment")
+      .where("posts.id = :id", { id })
+      .getOne();
 
-    const commentRepository = getRepository(Comment);
-
-    const comment = await commentRepository.findOne(id);
-
+    const comment = post?.comment;
+    if (Object(comment).length === 0) {
+      response.status(404).json({ message: "comentário não encontrado" });
+    }
     return response.json(comment);
-  } catch (error) {
-    return response.status(404);
   }
-});
+);
 
 export default commentRouter;

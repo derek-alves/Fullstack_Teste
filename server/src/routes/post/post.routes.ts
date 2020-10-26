@@ -1,4 +1,4 @@
-import { Router, Request, Response, query } from "express";
+import { Router, Request, Response } from "express";
 import { getRepository } from "typeorm";
 
 import Post from "../../models/Post";
@@ -6,22 +6,6 @@ import Post from "../../models/Post";
 import CreatePostService from "../../services/posts/CreatePostService";
 
 const postRouter = Router();
-
-
-postRouter.get("/:id/comments", async (request: Request, response: Response) => {
-  const postRepository = getRepository(Post);
-  const { id } = request.params;
-  const post = await postRepository.createQueryBuilder('posts')
-    .leftJoinAndSelect("posts.comment", "comment")
-    .where("posts.id = :id", { id })
-    .getOne();
-
-    if(!!post?.comment){
-      response.status(404);
-    } 
-  
-  return response.json(post?.comment);
-});
 
 
 postRouter.get("/", async (request: Request, response: Response) => {

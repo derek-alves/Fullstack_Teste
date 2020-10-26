@@ -3,17 +3,17 @@ import Comment from "../../models/Comment";
 
 interface Request {
   comment: string;
-  post_id: string;
+  post_id: number;
 }
 
 class CreateCommentService {
-  public async execute(data: Request): Promise<Comment> {
-    const { comment, post_id } = data;
+  public async execute({comment,post_id}: Request): Promise<Comment> {
+  
     const commentRepository = getRepository(Comment);
 
     const comments = commentRepository.create({
       comment,
-      post_id,
+      post_id
     });
 
     await commentRepository.save(comments);
