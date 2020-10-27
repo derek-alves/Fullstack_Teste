@@ -24,19 +24,19 @@ const Posts: React.FC = () => {
     <div id="page-post-list" className="container">
       <Header
         icon="FaHome"
-        title="Crie um post novo e interaja com novos posts"
+        title="Crie e interaja em com nossos posts"
       >
-        <form id="search-posts">
+        <div id="search-posts">
           <div className="new-post">
             <button onClick={() => setIsModalVisible(true)}>
               <FaPlusCircle color="white" size="40px" />
               <label>Criar novo post</label>
             </button>
-            {isModalVisible ? (
+             {isModalVisible ? (
               <ModalCreatePost onClose={() => setIsModalVisible(false)} />
-            ) : null}
+            ) : null} 
           </div>
-        </form>
+        </div>
       </Header>
 
       <main>

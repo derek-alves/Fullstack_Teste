@@ -9,9 +9,10 @@ const postRouter = Router();
 
 
 postRouter.get("/", async (request: Request, response: Response) => {
-  const postRepository = getRepository(Post);
-
-  const posts = await postRepository.find();
+  const posts = await getRepository(Post)
+  .createQueryBuilder('posts')
+  .orderBy('id',"DESC")
+  .getMany()
 
   return response.json(posts);
 });
@@ -23,6 +24,8 @@ postRouter.get("/:id", async (request: Request, response: Response) => {
     const postRepository = getRepository(Post);
 
     const post = await postRepository.findOne(id);
+
+    
     
     if(!post){
       response.status(404);

@@ -12,6 +12,7 @@ commentRouter.post(
   async (request: Request, response: Response) => {
     try {
       const { id } = request.params;
+      console.log(id);
       const { comment } = request.body;
 
       const post_id = Number(id);
@@ -39,7 +40,7 @@ commentRouter.get(
 
     const comment = post?.comment;
     if (Object(comment).length === 0) {
-      response.status(404).json({ message: "comentário não encontrado" });
+      return response.status(404).json({ message: "comentário não encontrado" });
     }
     return response.json(comment);
   }
